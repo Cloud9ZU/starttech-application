@@ -224,7 +224,7 @@ jobs:
 
           for i in {1..20}; do
             STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-              http://${{ secrets.ALB_DNS_NAME }}/health || true)
+              http://${{ secrets.ALB_DNS_NAME }}/ping || true)
 
             if [ "$STATUS" = "200" ]; then
               echo "Backend is healthy!"

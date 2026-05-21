@@ -5,9 +5,15 @@ IMAGE="${1:-}"
 REGION="${AWS_REGION:-us-east-1}"
 ENVIRONMENT="${ENVIRONMENT:-cloud}"
 BACKEND_TAG_NAME="${BACKEND_TAG_NAME:-${ENVIRONMENT}-backend}"
+IMAGE_REGISTRY="$(echo "$IMAGE" | cut -d/ -f1)"
 
 if [ -z "$IMAGE" ]; then
   echo "Usage: $0 <image-uri>"
+  exit 1
+fi
+
+if [ -z "$IMAGE_REGISTRY" ] || [ "$IMAGE_REGISTRY" = "$IMAGE" ]; then
+  echo "Image must be a fully qualified ECR image URI."
   exit 1
 fi
 
@@ -60,7 +66,7 @@ aws ssm send-command \
     "DB_NAME=$(aws ssm get-parameter --name /starttech/cloud/db_name --query Parameter.Value --output text --region '"$REGION"')",
     "REDIS_HOST=$(aws ssm get-parameter --name /starttech/cloud/redis_host --query Parameter.Value --output text --region '"$REGION"')",
 
-    "aws ecr get-login-password --region '"$REGION"' | docker login --username AWS --password-stdin 093796422475.dkr.ecr.us-east-1.amazonaws.com",
+    "aws ecr get-login-password --region '"$REGION"' | docker login --username AWS --password-stdin '"$IMAGE_REGISTRY"'",
 
     "docker system prune -af || true",
     "docker pull '"$IMAGE"'",
