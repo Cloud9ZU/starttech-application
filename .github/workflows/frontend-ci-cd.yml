@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/full-stack
     paths:
       - "frontend/**"
       - "scripts/deploy-frontend.sh"
@@ -49,7 +48,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::093796422475:role/GitHubActionsStartTechRole
+          role-to-assume: arn:aws:iam::803871199972:role/GitHubActionsStartTechRole
           aws-region: us-east-1
 
       - name: Deploy Frontend

@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var starttechS3WebsiteOriginPattern = regexp.MustCompile(`^http://[a-z0-9-]*starttech-frontend-[a-z0-9]+\.s3-website-[a-z0-9-]+\.amazonaws\.com$`)
+var starttechS3WebsiteOriginPattern = regexp.MustCompile(`https://d1ke1thx1xksz5.cloudfront.net`)
 
 func isExplicitlyAllowedOrigin(origin string, allowedOrigins []string) bool {
 	normalizedOrigin := strings.TrimRight(strings.TrimSpace(origin), "/")
@@ -30,7 +30,7 @@ func CORSMiddleware(allowedOrigins []string) gin.HandlerFunc {
 	if len(allowedOrigins) == 0 {
 		allowedOrigins = []string{
 			"http://localhost:5173",
-			"http://dev-starttech-frontend-ee4128bc.s3-website-us-east-1.amazonaws.com",
+			"https://d1ke1thx1xksz5.cloudfront.net",
 		}
 	}
 

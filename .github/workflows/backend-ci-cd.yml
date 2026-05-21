@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - feature/full-stack
+
 
     paths:
       - "backend/**"
@@ -19,7 +19,7 @@ permissions:
 
 env:
   AWS_REGION: us-east-1
-  ECR_REPOSITORY: dev-starttech-backend
+  ECR_REPOSITORY: cloud-starttech-backend
   IMAGE_TAG: ${{ github.sha }}
 
 jobs:
@@ -90,7 +90,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::093796422475:role/GitHubActionsStartTechRole
+          role-to-assume: arn:aws:iam::803871199972:role/GitHubActionsStartTechRole
           aws-region: us-east-1
 
       # =========================================
@@ -200,7 +200,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::093796422475:role/GitHubActionsStartTechRole
+          role-to-assume: arn:aws:iam::803871199972:role/GitHubActionsStartTechRole
           aws-region: us-east-1
 
       # =========================================
