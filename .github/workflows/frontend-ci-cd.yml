@@ -40,7 +40,16 @@ jobs:
 
       - name: Create Frontend Environment File
         run: |
-          echo "VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}" >> .env
+          API_BASE_URL="${{ secrets.VITE_API_BASE_URL }}"
+
+          if [ -n "$API_BASE_URL" ] && [[ "$API_BASE_URL" != https://* ]]; then
+            echo "VITE_API_BASE_URL must be HTTPS when deploying the frontend."
+            exit 1
+          fi
+
+          if [ -n "$API_BASE_URL" ]; then
+            echo "VITE_API_BASE_URL=$API_BASE_URL" >> .env
+          fi
 
       - name: Build Frontend
         run: npm run build
