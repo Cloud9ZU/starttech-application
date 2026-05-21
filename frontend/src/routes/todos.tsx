@@ -26,7 +26,17 @@ function Todos() {
         queryKey: ['todos'],
         queryFn: async () => {
             const response = await apiClient.get('/tasks');
-            return response.data as Todo[];
+            const data = response.data;
+
+            if (Array.isArray(data)) {
+                return data as Todo[];
+            }
+
+            if (Array.isArray(data?.todos)) {
+                return data.todos as Todo[];
+            }
+
+            throw new Error('Unexpected tasks response format');
         },
         enabled: !!user,
     });
