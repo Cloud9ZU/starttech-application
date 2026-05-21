@@ -2,15 +2,15 @@
 set -euo pipefail
 
 IMAGE_INPUT="${1:-}"
-ACCOUNT_ID="093796422475"
+ACCOUNT_ID="803871199972"
 REGION="us-east-1"
-REPOSITORY="dev-starttech-backend"
+REPOSITORY="cloud-starttech-backend"
 SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ -z "$IMAGE_INPUT" ]; then
   echo "Usage: $0 <image-uri-or-tag>"
   echo "Examples:"
-  echo "  $0 123456789012.dkr.ecr.us-east-1.amazonaws.com/dev-starttech-backend:abc123"
+  echo "  $0 123456789012.dkr.ecr.us-east-1.amazonaws.com/cloud-starttech-backend:abc123"
   echo "  $0 abc123"
   exit 1
 fi

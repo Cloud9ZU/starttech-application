@@ -3,7 +3,7 @@ set -euo pipefail
 
 IMAGE="${1:-}"
 REGION="${AWS_REGION:-us-east-1}"
-ENVIRONMENT="${ENVIRONMENT:-dev}"
+ENVIRONMENT="${ENVIRONMENT:-cloud}"
 BACKEND_TAG_NAME="${BACKEND_TAG_NAME:-${ENVIRONMENT}-backend}"
 
 if [ -z "$IMAGE" ]; then
@@ -55,10 +55,10 @@ aws ssm send-command \
   --document-name "AWS-RunShellScript" \
   --region "$REGION" \
   --parameters 'commands=[
-    "MONGO_URI=$(aws ssm get-parameter --name /starttech/dev/mongo_uri --with-decryption --query Parameter.Value --output text --region '"$REGION"')",
-    "JWT_SECRET=$(aws ssm get-parameter --name /starttech/dev/jwt_secret --with-decryption --query Parameter.Value --output text --region '"$REGION"')",
-    "DB_NAME=$(aws ssm get-parameter --name /starttech/dev/db_name --query Parameter.Value --output text --region '"$REGION"')",
-    "REDIS_HOST=$(aws ssm get-parameter --name /starttech/dev/redis_host --query Parameter.Value --output text --region '"$REGION"')",
+    "MONGO_URI=$(aws ssm get-parameter --name /starttech/cloud/mongo_uri --with-decryption --query Parameter.Value --output text --region '"$REGION"')",
+    "JWT_SECRET=$(aws ssm get-parameter --name /starttech/cloud/jwt_secret --with-decryption --query Parameter.Value --output text --region '"$REGION"')",
+    "DB_NAME=$(aws ssm get-parameter --name /starttech/cloud/db_name --query Parameter.Value --output text --region '"$REGION"')",
+    "REDIS_HOST=$(aws ssm get-parameter --name /starttech/cloud/redis_host --query Parameter.Value --output text --region '"$REGION"')",
 
     "aws ecr get-login-password --region '"$REGION"' | docker login --username AWS --password-stdin 093796422475.dkr.ecr.us-east-1.amazonaws.com",
 
